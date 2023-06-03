@@ -1,16 +1,6 @@
 # flutter_portfolio
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 시행 착오
+1. notion 은 web_view 에서 접근할 수 없게 막아서 새로운 페이지를 넘기는 방식으로 notion page 를 가져올 수 있게 수정했다
+2. about page - animated_text_kit 설정하여 글자에 효과 넣음
+3. 
