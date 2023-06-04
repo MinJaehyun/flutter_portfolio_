@@ -14,7 +14,7 @@ class AboutList extends StatelessWidget {
         height: double.infinity,
         margin: EdgeInsets.all(12.0),
         padding: EdgeInsets.all(20.0),
-        decoration: BoxDecoration(color: Colors.green),
+        // decoration: BoxDecoration(color: Colors.green),
         child: Center(
           child: AnimatedTextKit(
             animatedTexts: [
