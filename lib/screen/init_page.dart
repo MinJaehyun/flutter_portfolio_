@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portfolio/screen/about_list.dart';
+import 'package:flutter_portfolio/screen/resume_page.dart';
+
 
 class InitPage extends StatefulWidget {
   const InitPage({Key? key}) : super(key: key);
@@ -51,6 +53,18 @@ class _InitPageState extends State<InitPage> {
                     if (constraints.maxWidth > 1400) Text('ABOUT'),
                   ],
                 ),
+                // note: 이력서
+                Column(
+                  children: [
+                    IconButton(
+                      onPressed: () => setState(() => mainPage = 'resume'),
+                      icon: Icon(
+                        Icons.note_outlined,
+                      ),
+                    ),
+                    if (constraints.maxWidth > 1400) Text('RESUME'),
+                  ],
+                ),
                 Column(
                   children: [
                     IconButton(
@@ -72,17 +86,6 @@ class _InitPageState extends State<InitPage> {
                 Column(
                   children: [
                     IconButton(
-                      onPressed: () => setState(() => mainPage = 'resume'),
-                      icon: Icon(
-                        Icons.note_outlined,
-                      ),
-                    ),
-                    if (constraints.maxWidth > 1400) Text('RESUME'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
                       onPressed: () => setState(() => mainPage = 'about'),
                       icon: Icon(Icons.contact_mail_outlined),
                     ),
@@ -96,9 +99,9 @@ class _InitPageState extends State<InitPage> {
         // note: 클릭한 대상을 넘겨받고, 이를 변수에 담아 아래 컨테이너에 담고 처리한다
         // note: if(mainPage == 'about') 이면 about_list.dart 가져오기
         if (mainPage == 'about') AboutList(),
+        if(mainPage == 'resume') ResumePage(),
         // if(mainPage == 'works') WorksList(),
         // if(mainPage == 'github') GithubPage(),
-        // if(mainPage == 'resume') NotionPage(),
         // if(mainPage == 'contact') ContactPage(),
       ],
     );
