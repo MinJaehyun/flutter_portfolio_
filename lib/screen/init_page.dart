@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portfolio/screen/about_list.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class InitPage extends StatefulWidget {
   const InitPage({Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class _InitPageState extends State<InitPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Portfolio',style: TextStyle(color: Colors.blueAccent)),
+        title: Text('Portfolio', style: TextStyle(color: Colors.blueAccent)),
         centerTitle: true,
         elevation: 0.0,
         backgroundColor: Colors.white,
@@ -65,7 +64,7 @@ class _InitPageState extends State<InitPage> {
                   children: [
                     IconButton(
                       onPressed: () => setState(() => mainPage = 'github'),
-                      icon: SvgPicture.asset('assets/images/left_list/github-5.svg'),
+                      icon: Icon(Icons.account_circle_outlined),
                     ),
                     if (constraints.maxWidth > 1400) Text('GITHUB'),
                   ],
@@ -96,7 +95,7 @@ class _InitPageState extends State<InitPage> {
         ),
         // note: 클릭한 대상을 넘겨받고, 이를 변수에 담아 아래 컨테이너에 담고 처리한다
         // note: if(mainPage == 'about') 이면 about_list.dart 가져오기
-        if(mainPage == 'about') AboutList(),
+        if (mainPage == 'about') AboutList(),
         // if(mainPage == 'works') WorksList(),
         // if(mainPage == 'github') GithubPage(),
         // if(mainPage == 'resume') NotionPage(),
