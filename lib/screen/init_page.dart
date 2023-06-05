@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portfolio/screen/about_list.dart';
+import 'package:flutter_portfolio/screen/contact_page.dart';
+import 'package:flutter_portfolio/screen/github_page.dart';
 import 'package:flutter_portfolio/screen/resume_page.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_portfolio/screen/works_list.dart';
 
 class InitPage extends StatefulWidget {
   const InitPage({Key? key}) : super(key: key);
@@ -137,9 +140,9 @@ class _InitPageState extends State<InitPage> {
         // note: if(mainPage == 'about') 이면 about_list.dart 가져오기
         if (mainPage == 'about') AboutList(),
         if (mainPage == 'resume') ResumePage(),
-        // if(mainPage == 'works') WorksList(),
-        // if(mainPage == 'github') GithubPage(),
-        // if(mainPage == 'contact') ContactPage(),
+        if(mainPage == 'works') WorksList(),
+        if(mainPage == 'github') GithubPage(),
+        if(mainPage == 'contact') ContactPage(),
       ],
     );
   }
