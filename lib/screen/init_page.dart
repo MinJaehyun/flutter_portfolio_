@@ -13,7 +13,7 @@ class InitPage extends StatefulWidget {
 }
 
 class _InitPageState extends State<InitPage> {
-  String mainPage = 'works';
+  String mainPage = 'about';
 
   @override
   Widget build(BuildContext context) {
