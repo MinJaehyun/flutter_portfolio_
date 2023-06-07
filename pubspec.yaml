@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   animated_text_kit: ^4.2.2
   introduction_screen: ^3.1.8
+  smooth_page_indicator: ^1.1.0
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +66,8 @@ flutter:
   assets:
     - assets/images/
     - assets/resume_image/
+    - assets/works_image_left/
+    - assets/works_image_center/mongodb/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
