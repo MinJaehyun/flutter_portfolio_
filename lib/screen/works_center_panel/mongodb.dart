@@ -74,7 +74,7 @@ class _MongoDBState extends State<MongoDB> {
                       print("Can't launch $url");
                     }
                   },
-                  next: const Icon(Icons.next_plan),
+                  next: const Icon(Icons.play_arrow_outlined),
                   // fixme: back 안되는 이유 ?
                   // showBackButton: true,
                   // back: const Icon(Icons.arrow_back_outlined),
@@ -125,31 +125,27 @@ class _MongoDBState extends State<MongoDB> {
                 ),
               ),
             ),
-            // note: 중앙 우측 패널
+            // note: works-center-right- 몽고디비 패널
             Flexible(
               child: Container(
                 // color: Colors.greenAccent,
                 child: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       AnimatedTextKit(
                         animatedTexts: [
                           TypewriterAnimatedText(
-                            'mongoDBProject\n',
+                            'mongoDBProject\n'
+                            '2021.11 ~ 2022.02\n'
+                            '\n',
                             textStyle: TextStyle(fontFamily: 'Aggro', fontSize: 25),
                           ),
                         ],
                         totalRepeatCount: 1,
                       ),
                       AnimatedTextKit(
-                        animatedTexts: [
-                          TypewriterAnimatedText(
-                            '2021.11 ~ 2022.02\n'
-                            '\n',
-                            textStyle: TextStyle(fontFamily: 'Aggro', fontSize: 13),
-                          ),
-                        ],
+                        animatedTexts: [TypewriterAnimatedText('\n\n')],
                         totalRepeatCount: 1,
                       ),
                       Padding(

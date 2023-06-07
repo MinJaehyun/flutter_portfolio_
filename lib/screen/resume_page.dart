@@ -46,7 +46,7 @@ class _ResumePageState extends State<ResumePage> {
           // globalBackgroundColor: Colors.white,
           allowImplicitScrolling: true,
           // autoScrollDuration: 3000,
-          done: const Text('이력서 페이지로 자세히보기', style: TextStyle(fontWeight: FontWeight.w600)),
+          done: const Text('이력서 페이지 자세히보기', style: TextStyle(fontWeight: FontWeight.w600)),
           onDone: () async {
             final url = Uri.parse('https://www.notion.so/8a839ad1cac74978bfd43ba496c6f165');
             if (await canLaunchUrl(url)) {
@@ -55,7 +55,7 @@ class _ResumePageState extends State<ResumePage> {
               print("Can't launch $url");
             }
           },
-          next: const Icon(Icons.next_plan),
+          next: const Icon(Icons.play_arrow_outlined),
           pages: [
             PageViewModel(
               title: "",
