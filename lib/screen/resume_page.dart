@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ResumePage extends StatefulWidget {
   const ResumePage({Key? key}) : super(key: key);
@@ -45,11 +46,16 @@ class _ResumePageState extends State<ResumePage> {
           // globalBackgroundColor: Colors.white,
           allowImplicitScrolling: true,
           // autoScrollDuration: 3000,
-          done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
-          onDone: (){
-            // todo: 완료 시, 어떡할건지 ?
+          done: const Text('이력서 페이지로 자세히보기', style: TextStyle(fontWeight: FontWeight.w600)),
+          onDone: () async {
+            final url = Uri.parse('https://www.notion.so/8a839ad1cac74978bfd43ba496c6f165');
+            if (await canLaunchUrl(url)) {
+              launchUrl(url);
+            } else {
+              print("Can't launch $url");
+            }
           },
-          next: const Icon(Icons.arrow_forward),
+          next: const Icon(Icons.next_plan),
           pages: [
             PageViewModel(
               title: "",
