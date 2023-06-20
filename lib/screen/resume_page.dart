@@ -90,3 +90,7 @@ class _ResumePageState extends State<ResumePage> {
     );
   }
 }
+
+// note: Expanded 위젯으로 이미지 최대크기 맞추려 했는데, ParentDataWidget 에러난다
+// Expanded 위젯은 Column, Row, flex 위젯 안에서만 사용해야 한다
+// PageViewModel 위젯 내에서는 사용 불가능 하다

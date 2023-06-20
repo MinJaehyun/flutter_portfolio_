@@ -15,15 +15,53 @@ class InitPage extends StatefulWidget {
 class _InitPageState extends State<InitPage> {
   String mainPage = 'about';
 
+  // note: Drawer 내 setState 설정 사용 안 되므로, 함수로 처리하는 방법으로 해결
+  void changeMainPage(String pageName) {
+    setState(() {
+      mainPage = pageName;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final currentWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Portfolio', style: TextStyle(color: Colors.blueAccent)),
-        centerTitle: true,
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-      ),
+      appBar: currentWidth < 960
+          ? AppBar(
+              title: Text('Portfolio', style: TextStyle(color: Colors.blueAccent)),
+              centerTitle: true,
+              elevation: 0.0,
+              backgroundColor: Colors.white,
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.lightGreen, Colors.white70],
+                  ),
+                ),
+              ),
+            )
+          // note: 사이즈가 960 이상이면 AppBar 숨기기
+          : AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.white,
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.lightBlueAccent, Colors.white70],
+                  ),
+                ),
+              ),
+              elevation: 0,
+              title: Text(
+                'Portfolio',
+                style: TextStyle(color: Colors.blueAccent),
+              ),
+              centerTitle: true),
       body: Container(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -31,10 +69,57 @@ class _InitPageState extends State<InitPage> {
           },
         ),
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.all(8),
+          children: [
+            DrawerHeader(
+              child: Text(''),
+            ),
+            // note: 클릭하면 해당 페이지 보여주도록 설정함
+            ListTile(
+              onTap: () {
+                changeMainPage('about');
+              },
+              leading: Icon(Icons.perm_identity_outlined),
+              title: Text('ABOUT'),
+              trailing: Icon(Icons.info_outlined),
+            ),
+            SizedBox(height: 120),
+            ListTile(
+              onTap: () {
+                changeMainPage('resume');
+              },
+              leading: Icon(Icons.note_outlined),
+              title: Text('resume'),
+              trailing: Icon(Icons.info_outlined),
+            ),
+            SizedBox(height: 120),
+            ListTile(
+              onTap: () {
+                changeMainPage('works');
+              },
+              leading: Icon(Icons.build_outlined),
+              title: Text('WORKS'),
+              trailing: Icon(Icons.info_outlined),
+            ),
+            SizedBox(height: 120),
+            ListTile(
+              onTap: () {
+                changeMainPage('contact');
+              },
+              leading: Icon(Icons.contact_mail_outlined),
+              title: Text('CONTACT'),
+              trailing: Icon(Icons.info_outlined),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Row buildRow(BoxConstraints constraints) {
+    print(mainPage);
     return Row(
       children: [
         Flexible(
@@ -46,22 +131,24 @@ class _InitPageState extends State<InitPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 // note: 길이 확인: Text(constraints.maxWidth.toString()),
+                // note: about: 내 소개
                 Column(
                   children: [
                     IconButton(
                       onPressed: () => setState(() => mainPage = 'about'),
-                      icon: Icon(Icons.perm_identity_outlined),
+                      icon: (constraints.maxWidth > 960) ? Icon(Icons.perm_identity_outlined) : Opacity(opacity: 0),
                     ),
                     // note: 1400 이상이면서(&&), 클릭한 대상이면 애니메이션 적용하여 text 나타내기
-                    if ((constraints.maxWidth > 1400) && (mainPage == 'about'))
+                    if ((constraints.maxWidth > 960) && (mainPage == 'about'))
                       AnimatedTextKit(
                         animatedTexts: [
                           WavyAnimatedText('ABOUT'),
                         ],
                         repeatForever: true,
                       )
-                      // note: 크기가 1400 이상이고, 클릭한 대상이 아니면 text 만 나타내기
-                    else if (constraints.maxWidth > 1400) Text('ABOUT')
+                    // note: 크기가 1400 이상이고, 클릭한 대상이 아니면 text 만 나타내기
+                    else if (constraints.maxWidth > 960)
+                      Text('ABOUT')
                   ],
                 ),
                 // note: 이력서
@@ -69,67 +156,53 @@ class _InitPageState extends State<InitPage> {
                   children: [
                     IconButton(
                       onPressed: () => setState(() => mainPage = 'resume'),
-                      icon: Icon(
-                        Icons.note_outlined,
-                      ),
+                      icon: (constraints.maxWidth > 960) ? Icon(Icons.note_outlined) : Opacity(opacity: 0),
                     ),
-                    if ((constraints.maxWidth > 1400) && (mainPage == 'resume'))
+                    if ((constraints.maxWidth > 960) && (mainPage == 'resume'))
                       AnimatedTextKit(
                         animatedTexts: [
                           WavyAnimatedText('RESUME'),
                         ],
                         repeatForever: true,
                       )
-                    else if (constraints.maxWidth > 1400) Text('RESUME')
+                    else if (constraints.maxWidth > 960)
+                      Text('RESUME')
                   ],
                 ),
+                // note: works
                 Column(
                   children: [
                     IconButton(
                       onPressed: () => setState(() => mainPage = 'works'),
-                      icon: Icon(Icons.build_outlined),
+                      icon: (constraints.maxWidth > 960) ? Icon(Icons.build_outlined) : Opacity(opacity: 0),
                     ),
-                    if ((constraints.maxWidth > 1400) && (mainPage == 'works'))
+                    if ((constraints.maxWidth > 960) && (mainPage == 'works'))
                       AnimatedTextKit(
                         animatedTexts: [
                           WavyAnimatedText('WORKS'),
                         ],
                         repeatForever: true,
                       )
-                    else if (constraints.maxWidth > 1400) Text('WORKS')
+                    else if (constraints.maxWidth > 960)
+                      Text('WORKS')
                   ],
                 ),
-                // note: 깃헙 페이지 삭제 -> 추 후 사용할 공간 남겨둠
-                // Column(
-                //   children: [
-                //     IconButton(
-                //       onPressed: () => setState(() => mainPage = 'github'),
-                //       icon: Icon(Icons.account_circle_outlined),
-                //     ),
-                //     if ((constraints.maxWidth > 1400) && (mainPage == 'github'))
-                //       AnimatedTextKit(
-                //         animatedTexts: [
-                //           WavyAnimatedText('GITHUB'),
-                //         ],
-                //         repeatForever: true,
-                //       )
-                //     else if (constraints.maxWidth > 1400) Text('GITHUB')
-                //   ],
-                // ),
+                // note: contact
                 Column(
                   children: [
                     IconButton(
                       onPressed: () => setState(() => mainPage = 'contact'),
-                      icon: Icon(Icons.contact_mail_outlined),
+                      icon: (constraints.maxWidth > 960) ? Icon(Icons.contact_mail_outlined) : Opacity(opacity: 0),
                     ),
-                    if ((constraints.maxWidth > 1400) && (mainPage == 'contact'))
+                    if ((constraints.maxWidth > 960) && (mainPage == 'contact'))
                       AnimatedTextKit(
                         animatedTexts: [
                           WavyAnimatedText('CONTACT'),
                         ],
                         repeatForever: true,
                       )
-                    else if (constraints.maxWidth > 1400) Text('CONTACT')
+                    else if (constraints.maxWidth > 960)
+                      Text('CONTACT')
                   ],
                 ),
               ],
@@ -141,7 +214,6 @@ class _InitPageState extends State<InitPage> {
         if (mainPage == 'about') AboutList(),
         if (mainPage == 'resume') ResumePage(),
         if (mainPage == 'works') WorksList(),
-        // if (mainPage == 'github') GithubPage(),
         if (mainPage == 'contact') ContactPage(),
       ],
     );
