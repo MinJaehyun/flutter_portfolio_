@@ -74,7 +74,17 @@ class _InitPageState extends State<InitPage> {
           padding: EdgeInsets.all(8),
           children: [
             DrawerHeader(
-              child: Text(''),
+              // note: DrawerHeader 내에 Divider 제거
+              decoration: BoxDecoration(
+                  border: Border(
+                bottom: Divider.createBorderSide(
+                  context,
+                  color: Colors.white70,
+                ),
+              )),
+              child: TextButton(onPressed: (){
+                Navigator.of(context).pop();
+              }, child: Text('Close', style: TextStyle(color: Colors.redAccent))),
             ),
             // note: 클릭하면 해당 페이지 보여주도록 설정함
             ListTile(
@@ -83,7 +93,7 @@ class _InitPageState extends State<InitPage> {
               },
               leading: Icon(Icons.perm_identity_outlined),
               title: Text('ABOUT'),
-              trailing: Icon(Icons.info_outlined),
+              trailing: Icon(Icons.arrow_forward),
             ),
             SizedBox(height: 120),
             ListTile(
@@ -92,7 +102,7 @@ class _InitPageState extends State<InitPage> {
               },
               leading: Icon(Icons.note_outlined),
               title: Text('resume'),
-              trailing: Icon(Icons.info_outlined),
+              trailing: Icon(Icons.arrow_forward),
             ),
             SizedBox(height: 120),
             ListTile(
@@ -101,7 +111,7 @@ class _InitPageState extends State<InitPage> {
               },
               leading: Icon(Icons.build_outlined),
               title: Text('WORKS'),
-              trailing: Icon(Icons.info_outlined),
+              trailing: Icon(Icons.arrow_forward),
             ),
             SizedBox(height: 120),
             ListTile(
@@ -110,7 +120,7 @@ class _InitPageState extends State<InitPage> {
               },
               leading: Icon(Icons.contact_mail_outlined),
               title: Text('CONTACT'),
-              trailing: Icon(Icons.info_outlined),
+              trailing: Icon(Icons.arrow_forward),
             ),
           ],
         ),

@@ -3,7 +3,10 @@
 ### 기능
 1. about page - animated_text_kit 설정하여 글자에 효과 넣음
 2. init_page - 전체 레이아웃 변경 (사이즈에 따른 menu-bar 설정)
-3. 
+
+### 개선할 점
+1. works 화면 줄이면 size 에러 나는 이유와 해결 방법 ?
+ - 레이아웃 맘에 안드는데 변경 하는건 어떤지 ?
 
 ### 시행 착오
 1. notion 은 web_view 에서 접근할 수 없게 막아서 새로운 페이지를 넘기는 방식으로 notion page 를 가져올 수 있게 수정했다
