@@ -16,14 +16,97 @@ class ContactPage extends StatelessWidget {
         padding: EdgeInsets.all(20.0),
         // decoration: BoxDecoration(color: Colors.green),
         child: Center(
-          child: AnimatedTextKit(
-            animatedTexts: [
-              TypewriterAnimatedText(
-                '테스트 중입니다..',
-                textStyle: TextStyle(fontFamily: 'Aggro', fontSize: 20),
-              ),
-            ],
-            totalRepeatCount: 1,
+          child: Container(
+            width: 500,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        'Name',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Text('민재현'),
+                  ],
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        'Age',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Text('만 40'),
+                  ],
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        'Phone',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Text('010-7339-6954'),
+                  ],
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        'Email',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Text('krism2891@gmail.com'),
+                  ],
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        'Address',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Text('화성시 기안동'),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -13,7 +13,7 @@ class InitPage extends StatefulWidget {
 }
 
 class _InitPageState extends State<InitPage> {
-  String mainPage = 'about';
+  String mainPage = 'contact';
 
   // note: Drawer 내 setState 설정 사용 안 되므로, 함수로 처리하는 방법으로 해결
   void changeMainPage(String pageName) {
@@ -30,6 +30,8 @@ class _InitPageState extends State<InitPage> {
       appBar: currentWidth < 960
           ? AppBar(
               title: Text('Portfolio', style: TextStyle(color: Colors.blueAccent)),
+              // note: Change drawer icon color
+              iconTheme: IconThemeData(color: Colors.blueAccent),
               centerTitle: true,
               elevation: 0.0,
               backgroundColor: Colors.white,
