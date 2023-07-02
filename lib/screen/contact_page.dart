@@ -25,10 +25,8 @@ class ContactPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(disabledBackgroundColor: Colors.green, minimumSize: Size(200, 50)),
+                      onPressed: null,
                       child: Text(
                         'Name',
                         style: TextStyle(color: Colors.white),
@@ -42,10 +40,8 @@ class ContactPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(disabledBackgroundColor: Colors.green, minimumSize: Size(200, 50)),
+                      onPressed: null,
                       child: Text(
                         'Age',
                         style: TextStyle(color: Colors.white),
@@ -59,10 +55,8 @@ class ContactPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(disabledBackgroundColor: Colors.green, minimumSize: Size(200, 50)),
+                      onPressed: null,
                       child: Text(
                         'Phone',
                         style: TextStyle(color: Colors.white),
@@ -76,10 +70,8 @@ class ContactPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(disabledBackgroundColor: Colors.green, minimumSize: Size(200, 50)),
+                      onPressed: null,
                       child: Text(
                         'Email',
                         style: TextStyle(color: Colors.white),
@@ -93,10 +85,8 @@ class ContactPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(disabledBackgroundColor: Colors.green, minimumSize: Size(200, 50)),
+                      onPressed: null,
                       child: Text(
                         'Address',
                         style: TextStyle(color: Colors.white),
