@@ -144,10 +144,9 @@ class _MongoDBState extends State<MongoDB> {
               print("Can't launch $url");
             }
           },
-          next: const Icon(Icons.play_arrow_outlined),
-          // fixme: back 안되는 이유 ?
-          // showBackButton: true,
-          // back: const Icon(Icons.arrow_back_outlined),
+          next: const Icon(Icons.arrow_forward_ios),
+          showBackButton: true,
+          back: const Icon(Icons.arrow_back_ios),
           pages: [
             PageViewModel(
                 title: "",
