@@ -13,12 +13,20 @@ class InitPage extends StatefulWidget {
 }
 
 class _InitPageState extends State<InitPage> {
-  String mainPage = 'contact';
+  String mainPage = 'about';
+  bool showArrowDrop = false;
+  String selectedWork = 'mongoDB';
 
-  // note: Drawer 내 setState 설정 사용 안 되므로, 함수로 처리하는 방법으로 해결
+  // note: Drawer 내 setState 설정 사용 안 되므로 (이게 아닌 showDialog() 위젯 때문인듯), 함수로 처리하는 방법으로 해결
   void changeMainPage(String pageName) {
     setState(() {
       mainPage = pageName;
+    });
+  }
+
+  void changeSelectedWork(String work) {
+    setState(() {
+      selectedWork = work;
     });
   }
 
@@ -27,6 +35,124 @@ class _InitPageState extends State<InitPage> {
     final currentWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.all(8),
+          children: [
+            DrawerHeader(
+              // note: DrawerHeader 내에 Divider 제거
+              decoration: BoxDecoration(
+                  border: Border(
+                bottom: Divider.createBorderSide(
+                  context,
+                  color: Colors.white70,
+                ),
+              )),
+              child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Close', style: TextStyle(color: Colors.redAccent))),
+            ),
+            // note: 클릭하면 해당 페이지 보여주도록 설정함
+            ListTile(
+              onTap: () {
+                changeMainPage('about');
+              },
+              leading: Icon(Icons.perm_identity_outlined),
+              title: Text('ABOUT'),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            SizedBox(height: 120),
+            ListTile(
+              onTap: () {
+                changeMainPage('resume');
+              },
+              leading: Icon(Icons.note_outlined),
+              title: Text('resume'),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            SizedBox(height: 120),
+            ListTile(
+              onTap: () {
+                setState(() {
+                  showArrowDrop = !showArrowDrop;
+                });
+                void _showDialog() {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        child: SizedBox(
+                          height: 150,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    // note: 화면 이동: ★ showDialog 내에서는 직접 setState() 변경 불가능 하므로, setState 변경하는 함수를 호출해야 한다
+                                    changeMainPage('works');
+                                    changeSelectedWork('mongoDB');
+                                    if (mainPage == 'works') WorksList(selectedWork);
+                                    // note: pop 두 번 처리로 왼쪽 목록 닫음
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('mongoDB project')),
+                              TextButton(
+                                  onPressed: () {
+                                    changeMainPage('works');
+                                    changeSelectedWork('my_note');
+                                    if (mainPage == 'works') WorksList(selectedWork);
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('my_note project')),
+                              TextButton(
+                                  onPressed: () {
+                                    changeMainPage('works');
+                                    changeSelectedWork('django');
+                                    if (mainPage == 'works') WorksList(selectedWork);
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('django project')),
+                              TextButton(
+                                  onPressed: () {
+                                    changeMainPage('works');
+                                    changeSelectedWork('biba');
+                                    if (mainPage == 'works') WorksList(selectedWork);
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('biba project')),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+
+                if (showArrowDrop) _showDialog();
+              },
+              leading: Icon(Icons.build_outlined),
+              title: Text('WORKS'),
+              trailing: showArrowDrop ? Icon(Icons.arrow_circle_right) : Icon(Icons.arrow_circle_left),
+            ),
+            SizedBox(height: 120),
+            ListTile(
+              onTap: () {
+                changeMainPage('contact');
+              },
+              leading: Icon(Icons.contact_mail_outlined),
+              title: Text('CONTACT'),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+          ],
+        ),
+      ),
       appBar: currentWidth < 960
           ? AppBar(
               title: Text('Portfolio', style: TextStyle(color: Colors.blueAccent)),
@@ -71,67 +197,10 @@ class _InitPageState extends State<InitPage> {
           },
         ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.all(8),
-          children: [
-            DrawerHeader(
-              // note: DrawerHeader 내에 Divider 제거
-              decoration: BoxDecoration(
-                  border: Border(
-                bottom: Divider.createBorderSide(
-                  context,
-                  color: Colors.white70,
-                ),
-              )),
-              child: TextButton(onPressed: (){
-                Navigator.of(context).pop();
-              }, child: Text('Close', style: TextStyle(color: Colors.redAccent))),
-            ),
-            // note: 클릭하면 해당 페이지 보여주도록 설정함
-            ListTile(
-              onTap: () {
-                changeMainPage('about');
-              },
-              leading: Icon(Icons.perm_identity_outlined),
-              title: Text('ABOUT'),
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            SizedBox(height: 120),
-            ListTile(
-              onTap: () {
-                changeMainPage('resume');
-              },
-              leading: Icon(Icons.note_outlined),
-              title: Text('resume'),
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            SizedBox(height: 120),
-            ListTile(
-              onTap: () {
-                changeMainPage('works');
-              },
-              leading: Icon(Icons.build_outlined),
-              title: Text('WORKS'),
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            SizedBox(height: 120),
-            ListTile(
-              onTap: () {
-                changeMainPage('contact');
-              },
-              leading: Icon(Icons.contact_mail_outlined),
-              title: Text('CONTACT'),
-              trailing: Icon(Icons.arrow_forward),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
   Row buildRow(BoxConstraints constraints) {
-    print(mainPage);
     return Row(
       children: [
         Flexible(
@@ -143,7 +212,7 @@ class _InitPageState extends State<InitPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 // note: 길이 확인: Text(constraints.maxWidth.toString()),
-                // note: about: 내 소개
+                // note: about
                 Column(
                   children: [
                     IconButton(
@@ -163,7 +232,7 @@ class _InitPageState extends State<InitPage> {
                       Text('ABOUT')
                   ],
                 ),
-                // note: 이력서
+                // note: resume
                 Column(
                   children: [
                     IconButton(
@@ -217,6 +286,26 @@ class _InitPageState extends State<InitPage> {
                       Text('CONTACT')
                   ],
                 ),
+                // note: theme
+                Column(
+                  children: [
+                    Container(
+                      height: 55,
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white12,
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          // todo: 클릭 시, isMoon = true 를 false 로 변경한다. 아이콘도 변경한다.
+                        },
+                        icon: (constraints.maxWidth > 960) ? Icon(Icons.sunny, color: Colors.white) : Opacity(opacity: 0),
+                        tooltip: 'brightness darkness or light mode',
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -225,9 +314,11 @@ class _InitPageState extends State<InitPage> {
         // note: if(mainPage == 'about') 이면 about_list.dart 가져오기
         if (mainPage == 'about') AboutList(),
         if (mainPage == 'resume') ResumePage(),
-        if (mainPage == 'works') WorksList(),
+        if (mainPage == 'works') WorksList(selectedWork),
         if (mainPage == 'contact') ContactPage(),
       ],
     );
   }
 }
+
+// fixme: 추 후, 중복 버튼(78~138) 개선하기
