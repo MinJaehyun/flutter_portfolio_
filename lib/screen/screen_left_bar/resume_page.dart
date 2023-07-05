@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,22 +33,20 @@ class _ResumePageState extends State<ResumePage> {
       );
     }
 
-    return Flexible(
-      flex: 11,
-      fit: FlexFit.tight,
+    return Expanded(
       child: Container(
-        // width: 1000,
-        height: double.infinity,
         margin: EdgeInsets.all(12.0),
-        padding: EdgeInsets.all(20.0),
-        // decoration: BoxDecoration(color: Colors.green),
         child: IntroductionScreen(
           key: introKey,
-          // globalBackgroundColor: Colors.white,
+          globalBackgroundColor: Colors.black12,
           allowImplicitScrolling: true,
           // autoScrollDuration: 3000,
-          done: const Text('이력서 페이지 자세히보기', style: TextStyle(fontWeight: FontWeight.w600)),
+          showBackButton: true,
+          back: const Icon(Icons.arrow_back_ios),
+          next: const Icon(Icons.arrow_forward_ios),
+          done: const Text('이력서 페이지로 이동', style: TextStyle(fontWeight: FontWeight.w600)),
           onDone: () async {
+            // note: launchUrl 패키지 사용하여 페이지 이동
             final url = Uri.parse('https://www.notion.so/8a839ad1cac74978bfd43ba496c6f165');
             if (await canLaunchUrl(url)) {
               launchUrl(url);
@@ -55,7 +54,6 @@ class _ResumePageState extends State<ResumePage> {
               print("Can't launch $url");
             }
           },
-          next: const Icon(Icons.play_arrow_outlined),
           pages: [
             PageViewModel(
               title: "",
@@ -91,6 +89,5 @@ class _ResumePageState extends State<ResumePage> {
   }
 }
 
-// note: Expanded 위젯으로 이미지 최대크기 맞추려 했는데, ParentDataWidget 에러난다
-// Expanded 위젯은 Column, Row, flex 위젯 안에서만 사용해야 한다
-// PageViewModel 위젯 내에서는 사용 불가능 하다
+// fixme: 추 후, pageview 를 helper/pageview.dart 만들어서 개선하기
+// resume_page 와 works_list 에 page view 를 구현하고 있다

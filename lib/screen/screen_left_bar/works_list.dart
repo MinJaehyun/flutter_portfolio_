@@ -6,7 +6,7 @@ import 'package:flutter_portfolio/screen/works_skill/mongodb_skill.dart';
 
 class WorksList extends StatefulWidget {
   WorksList(this._selectedWork, {Key? key}) : super(key: key);
-  String _selectedWork;
+  final String _selectedWork;
 
   @override
   State<WorksList> createState() => _WorksListState();
@@ -29,13 +29,7 @@ class _WorksListState extends State<WorksList> {
     BibaAbout bibaAbout = BibaAbout();
     BibaSkill bibaSkill = BibaSkill();
 
-    // List<String> works_image_left = [
-    //   'assets/works_image_left/mongoDB.png',
-    //   'assets/works_image_left/biba.png',
-    // ];
-
     return DefaultTabController(
-      // initialIndex: 2,
       length: 2,
       child: Expanded(
         child: Container(
@@ -55,9 +49,7 @@ class _WorksListState extends State<WorksList> {
                     Expanded(
                       child: TabBarView(
                         children: <Widget>[
-                          // note: 인자는 하위에서 받음
-                          // todo: 인자는 함수를 넣겨 줘서, 하위에서 동적 실행하게 한다
-                          // 인자에서 함수 2개 실행해서 결과값 가져오기 - mongoDB
+                          // note: 인자는 함수를 넣겨 줘서, 하위에서 동적 실행하게 한다
                           NestedTabBar(mongoDBAbout, mongoDBSkill),
                           NestedTabBar(bibaAbout, bibaSkill),
                         ],

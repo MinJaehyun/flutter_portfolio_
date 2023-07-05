@@ -37,7 +37,7 @@ class _InitPageState extends State<InitPage> {
       body: Container(child: LayoutBuilder(builder: (_, constraints) => _buildRow(constraints))),
     );
   }
-  // note:
+  // note: body -> Container -> LayoutBuilder -> _buildRow
   Row _buildRow(BoxConstraints constraints) {
     return Row(
       children: [
