@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_portfolio/screen/about_list.dart';
-import 'package:flutter_portfolio/screen/contact_page.dart';
-import 'package:flutter_portfolio/screen/resume_page.dart';
-import 'package:flutter_portfolio/screen/works_list.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_portfolio/screen/screen_left_bar/about_my_info.dart';
+import 'package:flutter_portfolio/screen/screen_left_bar/contact_page.dart';
+import 'package:flutter_portfolio/screen/screen_left_bar/resume_page.dart';
+import 'package:flutter_portfolio/screen/screen_left_bar/works_list.dart';
 
 class InitPage extends StatefulWidget {
   const InitPage({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class _InitPageState extends State<InitPage> {
     return Scaffold(
       drawer: Drawer(
         child: ListView(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.all(12),
           children: [
             DrawerHeader(
               // note: DrawerHeader 내에 Divider 제거
@@ -75,71 +75,12 @@ class _InitPageState extends State<InitPage> {
             SizedBox(height: 120),
             ListTile(
               onTap: () {
-                setState(() {
-                  showArrowDrop = !showArrowDrop;
-                });
-                void _showDialog() {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Dialog(
-                        child: SizedBox(
-                          height: 150,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                  onPressed: () {
-                                    // note: 화면 이동: ★ showDialog 내에서는 직접 setState() 변경 불가능 하므로, setState 변경하는 함수를 호출해야 한다
-                                    changeMainPage('works');
-                                    changeSelectedWork('mongoDB');
-                                    if (mainPage == 'works') WorksList(selectedWork);
-                                    // note: pop 두 번 처리로 왼쪽 목록 닫음
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('mongoDB project')),
-                              TextButton(
-                                  onPressed: () {
-                                    changeMainPage('works');
-                                    changeSelectedWork('my_note');
-                                    if (mainPage == 'works') WorksList(selectedWork);
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('my_note project')),
-                              TextButton(
-                                  onPressed: () {
-                                    changeMainPage('works');
-                                    changeSelectedWork('django');
-                                    if (mainPage == 'works') WorksList(selectedWork);
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('django project')),
-                              TextButton(
-                                  onPressed: () {
-                                    changeMainPage('works');
-                                    changeSelectedWork('biba');
-                                    if (mainPage == 'works') WorksList(selectedWork);
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('biba project')),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }
-
-                if (showArrowDrop) _showDialog();
+                changeMainPage('works');
+                Navigator.of(context).pop();
               },
               leading: Icon(Icons.build_outlined),
               title: Text('WORKS'),
-              trailing: showArrowDrop ? Icon(Icons.arrow_circle_right) : Icon(Icons.arrow_circle_left),
+              trailing: Icon(Icons.arrow_forward),
             ),
             SizedBox(height: 120),
             ListTile(
@@ -203,116 +144,113 @@ class _InitPageState extends State<InitPage> {
   Row buildRow(BoxConstraints constraints) {
     return Row(
       children: [
-        Flexible(
-          fit: FlexFit.tight,
-          child: Container(
-            margin: EdgeInsets.all(12.0),
-            padding: EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                // note: 길이 확인: Text(constraints.maxWidth.toString()),
-                // note: about
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () => setState(() => mainPage = 'about'),
-                      icon: (constraints.maxWidth > 960) ? Icon(Icons.perm_identity_outlined) : Opacity(opacity: 0),
+        Container(
+          margin: EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              // note: 길이 확인: Text(constraints.maxWidth.toString()),
+              // note: about
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () => setState(() => mainPage = 'about'),
+                    icon: (constraints.maxWidth > 960) ? Icon(Icons.perm_identity_outlined) : Opacity(opacity: 0),
+                  ),
+                  // note: 1400 이상이면서(&&), 클릭한 대상이면 애니메이션 적용하여 text 나타내기
+                  if ((constraints.maxWidth > 960) && (mainPage == 'about'))
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        WavyAnimatedText('ABOUT'),
+                      ],
+                      repeatForever: true,
+                    )
+                  // note: 크기가 1400 이상이고, 클릭한 대상이 아니면 text 만 나타내기
+                  else if (constraints.maxWidth > 960)
+                    Text('ABOUT')
+                ],
+              ),
+              // note: resume
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () => setState(() => mainPage = 'resume'),
+                    icon: (constraints.maxWidth > 960) ? Icon(Icons.note_outlined) : Opacity(opacity: 0),
+                  ),
+                  if ((constraints.maxWidth > 960) && (mainPage == 'resume'))
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        WavyAnimatedText('RESUME'),
+                      ],
+                      repeatForever: true,
+                    )
+                  else if (constraints.maxWidth > 960)
+                    Text('RESUME')
+                ],
+              ),
+              // note: works
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () => setState(() => mainPage = 'works'),
+                    icon: (constraints.maxWidth > 960) ? Icon(Icons.build_outlined) : Opacity(opacity: 0),
+                  ),
+                  if ((constraints.maxWidth > 960) && (mainPage == 'works'))
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        WavyAnimatedText('WORKS'),
+                      ],
+                      repeatForever: true,
+                    )
+                  else if (constraints.maxWidth > 960)
+                    Text('WORKS')
+                ],
+              ),
+              // note: contact
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () => setState(() => mainPage = 'contact'),
+                    icon: (constraints.maxWidth > 960) ? Icon(Icons.contact_mail_outlined) : Opacity(opacity: 0),
+                  ),
+                  if ((constraints.maxWidth > 960) && (mainPage == 'contact'))
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        WavyAnimatedText('CONTACT'),
+                      ],
+                      repeatForever: true,
+                    )
+                  else if (constraints.maxWidth > 960)
+                    Text('CONTACT')
+                ],
+              ),
+              // note: theme
+              Column(
+                children: [
+                  Container(
+                    height: 55,
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.white12,
                     ),
-                    // note: 1400 이상이면서(&&), 클릭한 대상이면 애니메이션 적용하여 text 나타내기
-                    if ((constraints.maxWidth > 960) && (mainPage == 'about'))
-                      AnimatedTextKit(
-                        animatedTexts: [
-                          WavyAnimatedText('ABOUT'),
-                        ],
-                        repeatForever: true,
-                      )
-                    // note: 크기가 1400 이상이고, 클릭한 대상이 아니면 text 만 나타내기
-                    else if (constraints.maxWidth > 960)
-                      Text('ABOUT')
-                  ],
-                ),
-                // note: resume
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () => setState(() => mainPage = 'resume'),
-                      icon: (constraints.maxWidth > 960) ? Icon(Icons.note_outlined) : Opacity(opacity: 0),
+                    child: IconButton(
+                      onPressed: () {
+                        // todo: 클릭 시, isMoon = true 를 false 로 변경한다. 아이콘도 변경한다.
+                      },
+                      icon: (constraints.maxWidth > 960) ? Icon(Icons.sunny, color: Colors.white) : Opacity(opacity: 0),
+                      tooltip: 'brightness darkness or light mode',
                     ),
-                    if ((constraints.maxWidth > 960) && (mainPage == 'resume'))
-                      AnimatedTextKit(
-                        animatedTexts: [
-                          WavyAnimatedText('RESUME'),
-                        ],
-                        repeatForever: true,
-                      )
-                    else if (constraints.maxWidth > 960)
-                      Text('RESUME')
-                  ],
-                ),
-                // note: works
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () => setState(() => mainPage = 'works'),
-                      icon: (constraints.maxWidth > 960) ? Icon(Icons.build_outlined) : Opacity(opacity: 0),
-                    ),
-                    if ((constraints.maxWidth > 960) && (mainPage == 'works'))
-                      AnimatedTextKit(
-                        animatedTexts: [
-                          WavyAnimatedText('WORKS'),
-                        ],
-                        repeatForever: true,
-                      )
-                    else if (constraints.maxWidth > 960)
-                      Text('WORKS')
-                  ],
-                ),
-                // note: contact
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () => setState(() => mainPage = 'contact'),
-                      icon: (constraints.maxWidth > 960) ? Icon(Icons.contact_mail_outlined) : Opacity(opacity: 0),
-                    ),
-                    if ((constraints.maxWidth > 960) && (mainPage == 'contact'))
-                      AnimatedTextKit(
-                        animatedTexts: [
-                          WavyAnimatedText('CONTACT'),
-                        ],
-                        repeatForever: true,
-                      )
-                    else if (constraints.maxWidth > 960)
-                      Text('CONTACT')
-                  ],
-                ),
-                // note: theme
-                Column(
-                  children: [
-                    Container(
-                      height: 55,
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white12,
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          // todo: 클릭 시, isMoon = true 를 false 로 변경한다. 아이콘도 변경한다.
-                        },
-                        icon: (constraints.maxWidth > 960) ? Icon(Icons.sunny, color: Colors.white) : Opacity(opacity: 0),
-                        tooltip: 'brightness darkness or light mode',
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
         // note: 클릭한 대상을 넘겨받고, 이를 변수에 담아 아래 컨테이너에 담고 처리한다
         // note: if(mainPage == 'about') 이면 about_list.dart 가져오기
-        if (mainPage == 'about') AboutList(),
+        if (mainPage == 'about') AboutMyInfo(),
         if (mainPage == 'resume') ResumePage(),
         if (mainPage == 'works') WorksList(selectedWork),
         if (mainPage == 'contact') ContactPage(),
