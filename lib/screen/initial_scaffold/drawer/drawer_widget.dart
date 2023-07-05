@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatefulWidget {
-  const DrawerWidget(this.changeMainPage, {super.key});
-  final Function(String work) changeMainPage;
+  const DrawerWidget(Function(String pageName) this.changeMainPage, {super.key});
+
+  final Function(String pageName) changeMainPage;
 
   @override
   State<DrawerWidget> createState() => _DrawerWidgetState();
@@ -37,6 +38,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     return Column(
       children: [
         ListTile(
+          // note: 부모의 changeMainPage 함수를 실행하기 위해 자식에서의 설정
           onTap: () => widget.changeMainPage(mainPage),
           leading: icon,
           title: Text(mainText),
