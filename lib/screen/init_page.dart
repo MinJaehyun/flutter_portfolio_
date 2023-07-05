@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/about_my_info.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/contact_page.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/resume_page.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/works_list.dart';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class InitPage extends StatefulWidget {
   const InitPage({Key? key}) : super(key: key);
@@ -14,20 +15,15 @@ class InitPage extends StatefulWidget {
 
 class _InitPageState extends State<InitPage> {
   String mainPage = 'about';
-  bool showArrowDrop = false;
   String selectedWork = 'mongoDB';
 
-  // note: Drawer 내 setState 설정 사용 안 되므로 (이게 아닌 showDialog() 위젯 때문인듯), 함수로 처리하는 방법으로 해결
+  // note: Drawer 내 setState 설정 사용 안 되므로 함수 처리하여 해결
   void changeMainPage(String pageName) {
-    setState(() {
-      mainPage = pageName;
-    });
+    setState(() => mainPage = pageName);
   }
 
   void changeSelectedWork(String work) {
-    setState(() {
-      selectedWork = work;
-    });
+    setState(() => selectedWork = work);
   }
 
   @override
@@ -41,191 +37,80 @@ class _InitPageState extends State<InitPage> {
           children: [
             DrawerHeader(
               // note: DrawerHeader 내에 Divider 제거
-              decoration: BoxDecoration(
-                  border: Border(
-                bottom: Divider.createBorderSide(
-                  context,
-                  color: Colors.white70,
-                ),
-              )),
-              child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Close', style: TextStyle(color: Colors.redAccent))),
+              decoration: BoxDecoration(border: Border(bottom: Divider.createBorderSide(context, color: Colors.white70))),
+              child: TextButton(onPressed: () => Navigator.of(context).pop(), child: Text('Close', style: TextStyle(color: Colors.redAccent))),
             ),
-            // note: 클릭하면 해당 페이지 보여주도록 설정함
-            ListTile(
-              onTap: () {
-                changeMainPage('about');
-              },
-              leading: Icon(Icons.perm_identity_outlined),
-              title: Text('ABOUT'),
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            SizedBox(height: 120),
-            ListTile(
-              onTap: () {
-                changeMainPage('resume');
-              },
-              leading: Icon(Icons.note_outlined),
-              title: Text('resume'),
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            SizedBox(height: 120),
-            ListTile(
-              onTap: () {
-                changeMainPage('works');
-                Navigator.of(context).pop();
-              },
-              leading: Icon(Icons.build_outlined),
-              title: Text('WORKS'),
-              trailing: Icon(Icons.arrow_forward),
-            ),
-            SizedBox(height: 120),
-            ListTile(
-              onTap: () {
-                changeMainPage('contact');
-              },
-              leading: Icon(Icons.contact_mail_outlined),
-              title: Text('CONTACT'),
-              trailing: Icon(Icons.arrow_forward),
-            ),
+            // note: 클릭 시, 해당 페이지 보여줌
+            _buildListTile(mainPage: 'about', mainText: 'ABOUT', icon: Icon(Icons.perm_identity_outlined)),
+            _buildListTile(mainPage: 'resume', mainText: 'RESUME', icon: Icon(Icons.note_outlined)),
+            _buildListTile(mainPage: 'works', mainText: 'WORKS', icon: Icon(Icons.build_outlined)),
+            _buildListTile(mainPage: 'contact', mainText: 'CONTACT', icon: Icon(Icons.contact_mail_outlined)),
           ],
         ),
       ),
-      appBar: currentWidth < 960
-          ? AppBar(
-              title: Text('Portfolio', style: TextStyle(color: Colors.blueAccent)),
-              // note: Change drawer icon color
-              iconTheme: IconThemeData(color: Colors.blueAccent),
-              centerTitle: true,
-              elevation: 0.0,
-              backgroundColor: Colors.white,
-              flexibleSpace: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.lightGreen, Colors.white70],
-                  ),
-                ),
-              ),
-            )
-          // note: 사이즈가 960 이상이면 AppBar 숨기기
-          : AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.white,
-              flexibleSpace: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.lightBlueAccent, Colors.white70],
-                  ),
-                ),
-              ),
-              elevation: 0,
-              title: Text(
-                'Portfolio',
-                style: TextStyle(color: Colors.blueAccent),
-              ),
-              centerTitle: true),
-      body: Container(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return buildRow(constraints);
-          },
-        ),
-      ),
+      // note: 사이즈 960 이상이면 AppBar 숨김
+      appBar: currentWidth < 960 ? _buildAppBar(color: Colors.lightGreen, isBool: true) : _buildAppBar(color: Colors.lightBlueAccent, isBool: false),
+      body: Container(child: LayoutBuilder(builder: (_, constraints) => _buildRow(constraints))),
     );
   }
 
-  Row buildRow(BoxConstraints constraints) {
+  // // note: Drawer -> ListView 내 중복 코드
+  Column _buildListTile({required String mainPage, required String mainText, required Icon icon}) {
+    return Column(
+      children: [
+        ListTile(
+          onTap: () => changeMainPage(mainPage),
+          leading: icon,
+          title: Text(mainText),
+          trailing: Icon(Icons.arrow_forward),
+        ),
+        SizedBox(height: 120),
+      ],
+    );
+  }
+
+  // note: AppBar 내 중복 코드
+  AppBar _buildAppBar({required color, required bool isBool}) {
+    return AppBar(
+      title: Text('Portfolio', style: TextStyle(color: Colors.blueAccent)),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [color, Colors.white70],
+          ),
+        ),
+      ),
+      elevation: 0,
+      centerTitle: true,
+      backgroundColor: Colors.white,
+      // 메뉴바 icon 색상 지정
+      iconTheme: IconThemeData(color: Colors.blueAccent),
+      // note: appbar 내 icon btn 제거 방법
+      automaticallyImplyLeading: isBool,
+    );
+  }
+
+  // note:
+  Row _buildRow(BoxConstraints constraints) {
     return Row(
       children: [
         Container(
           margin: EdgeInsets.all(12.0),
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(12.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // note: 길이 확인: Text(constraints.maxWidth.toString()),
               // note: about
-              Column(
-                children: [
-                  IconButton(
-                    onPressed: () => setState(() => mainPage = 'about'),
-                    icon: (constraints.maxWidth > 960) ? Icon(Icons.perm_identity_outlined) : Opacity(opacity: 0),
-                  ),
-                  // note: 1400 이상이면서(&&), 클릭한 대상이면 애니메이션 적용하여 text 나타내기
-                  if ((constraints.maxWidth > 960) && (mainPage == 'about'))
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        WavyAnimatedText('ABOUT'),
-                      ],
-                      repeatForever: true,
-                    )
-                  // note: 크기가 1400 이상이고, 클릭한 대상이 아니면 text 만 나타내기
-                  else if (constraints.maxWidth > 960)
-                    Text('ABOUT')
-                ],
-              ),
+              column(constraints, mainPage: 'about', icon: Icon(Icons.perm_identity_outlined)),
               // note: resume
-              Column(
-                children: [
-                  IconButton(
-                    onPressed: () => setState(() => mainPage = 'resume'),
-                    icon: (constraints.maxWidth > 960) ? Icon(Icons.note_outlined) : Opacity(opacity: 0),
-                  ),
-                  if ((constraints.maxWidth > 960) && (mainPage == 'resume'))
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        WavyAnimatedText('RESUME'),
-                      ],
-                      repeatForever: true,
-                    )
-                  else if (constraints.maxWidth > 960)
-                    Text('RESUME')
-                ],
-              ),
+              column(constraints, mainPage: 'resume', icon: Icon(Icons.note_outlined)),
               // note: works
-              Column(
-                children: [
-                  IconButton(
-                    onPressed: () => setState(() => mainPage = 'works'),
-                    icon: (constraints.maxWidth > 960) ? Icon(Icons.build_outlined) : Opacity(opacity: 0),
-                  ),
-                  if ((constraints.maxWidth > 960) && (mainPage == 'works'))
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        WavyAnimatedText('WORKS'),
-                      ],
-                      repeatForever: true,
-                    )
-                  else if (constraints.maxWidth > 960)
-                    Text('WORKS')
-                ],
-              ),
+              column(constraints, mainPage: 'works', icon: Icon(Icons.build_outlined)),
               // note: contact
-              Column(
-                children: [
-                  IconButton(
-                    onPressed: () => setState(() => mainPage = 'contact'),
-                    icon: (constraints.maxWidth > 960) ? Icon(Icons.contact_mail_outlined) : Opacity(opacity: 0),
-                  ),
-                  if ((constraints.maxWidth > 960) && (mainPage == 'contact'))
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        WavyAnimatedText('CONTACT'),
-                      ],
-                      repeatForever: true,
-                    )
-                  else if (constraints.maxWidth > 960)
-                    Text('CONTACT')
-                ],
-              ),
-              // note: theme
+              column(constraints, mainPage: 'contact', icon: Icon(Icons.contact_mail_outlined)),
+              // todo: theme
               Column(
                 children: [
                   Container(
@@ -236,11 +121,10 @@ class _InitPageState extends State<InitPage> {
                       color: Colors.white12,
                     ),
                     child: IconButton(
-                      onPressed: () {
-                        // todo: 클릭 시, isMoon = true 를 false 로 변경한다. 아이콘도 변경한다.
-                      },
+                      // todo: 클릭 시, isMoon = true 를 false 로 변경한다. 아이콘도 변경한다.
+                      onPressed: null,
                       icon: (constraints.maxWidth > 960) ? Icon(Icons.sunny, color: Colors.white) : Opacity(opacity: 0),
-                      tooltip: 'brightness darkness or light mode',
+                      tooltip: 'testing... brightness darkness or light mode',
                     ),
                   ),
                 ],
@@ -257,6 +141,25 @@ class _InitPageState extends State<InitPage> {
       ],
     );
   }
-}
 
-// fixme: 추 후, 중복 버튼(78~138) 개선하기
+  // note: _buildRow 내에 중복 Column 을 개선
+  Column column(BoxConstraints constraints, {required String mainPage, required Icon icon}) {
+    return Column(
+      children: [
+        IconButton(
+          onPressed: () => setState(() => this.mainPage = mainPage),
+          icon: (constraints.maxWidth > 960) ? icon : Opacity(opacity: 0),
+        ),
+        // note: 1400 이상이면서(&&), 클릭한 대상이면 애니메이션 적용한 text 나타내기
+        if ((constraints.maxWidth > 960) && (this.mainPage == mainPage))
+          AnimatedTextKit(
+            animatedTexts: [WavyAnimatedText(mainPage)],
+            repeatForever: true,
+          )
+        // note: 크기가 1400 이상이고, 클릭한 대상이 아니면 text 만 나타내기
+        else if (constraints.maxWidth > 960)
+          Text(mainPage)
+      ],
+    );
+  }
+}
