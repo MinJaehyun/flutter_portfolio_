@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_portfolio/screen/initial_scaffold/drawer/drawer_widget.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/about_my_info.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/contact_page.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/resume_page.dart';
@@ -31,41 +32,10 @@ class _InitPageState extends State<InitPage> {
     final currentWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.all(12),
-          children: [
-            DrawerHeader(
-              // note: DrawerHeader 내에 Divider 제거
-              decoration: BoxDecoration(border: Border(bottom: Divider.createBorderSide(context, color: Colors.white70))),
-              child: TextButton(onPressed: () => Navigator.of(context).pop(), child: Text('Close', style: TextStyle(color: Colors.redAccent))),
-            ),
-            // note: 클릭 시, 해당 페이지 보여줌
-            _buildListTile(mainPage: 'about', mainText: 'ABOUT', icon: Icon(Icons.perm_identity_outlined)),
-            _buildListTile(mainPage: 'resume', mainText: 'RESUME', icon: Icon(Icons.note_outlined)),
-            _buildListTile(mainPage: 'works', mainText: 'WORKS', icon: Icon(Icons.build_outlined)),
-            _buildListTile(mainPage: 'contact', mainText: 'CONTACT', icon: Icon(Icons.contact_mail_outlined)),
-          ],
-        ),
-      ),
+      drawer: DrawerWidget(changeSelectedWork),
       // note: 사이즈 960 이상이면 AppBar 숨김
       appBar: currentWidth < 960 ? _buildAppBar(color: Colors.lightGreen, isBool: true) : _buildAppBar(color: Colors.lightBlueAccent, isBool: false),
       body: Container(child: LayoutBuilder(builder: (_, constraints) => _buildRow(constraints))),
-    );
-  }
-
-  // // note: Drawer -> ListView 내 중복 코드
-  Column _buildListTile({required String mainPage, required String mainText, required Icon icon}) {
-    return Column(
-      children: [
-        ListTile(
-          onTap: () => changeMainPage(mainPage),
-          leading: icon,
-          title: Text(mainText),
-          trailing: Icon(Icons.arrow_forward),
-        ),
-        SizedBox(height: 120),
-      ],
     );
   }
 
