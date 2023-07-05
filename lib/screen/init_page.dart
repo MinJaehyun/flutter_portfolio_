@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_portfolio/screen/initial_scaffold/appbar/init_appbar_widget.dart';
+import 'package:flutter_portfolio/screen/initial_scaffold/appbar/init_appbar_widget.dart';
 import 'package:flutter_portfolio/screen/initial_scaffold/drawer/drawer_widget.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/about_my_info.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/contact_page.dart';
@@ -30,40 +30,13 @@ class _InitPageState extends State<InitPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       drawer: DrawerWidget(changeMainPage),
       // note: appBar 는 PreferredSizeWidget 타입이며 PreferredSizeWidget 는 abstract class 이며, preferredSize 와 child 프로퍼티를 요구하여 설정함
-      appBar: currentWidth < 960 ? _buildAppBar(color: Colors.lightGreen, isBool: true) : _buildAppBar(color: Colors.lightBlueAccent, isBool: false),
-      // PreferredSize(preferredSize: const Size.fromHeight(55), child: InitAppBarWidget()),
+      appBar: PreferredSize(preferredSize: const Size.fromHeight(55), child: InitAppBarWidget()),
       body: Container(child: LayoutBuilder(builder: (_, constraints) => _buildRow(constraints))),
     );
   }
-
-  // note: AppBar 내 중복 코드
-  AppBar _buildAppBar({required color, required bool isBool}) {
-    return AppBar(
-      title: Text('Portfolio', style: TextStyle(color: Colors.blueAccent)),
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [color, Colors.white70],
-          ),
-        ),
-      ),
-      elevation: 0,
-      centerTitle: true,
-      backgroundColor: Colors.white,
-      // 메뉴바 icon 색상 지정
-      iconTheme: IconThemeData(color: Colors.blueAccent),
-      // note: appbar 내 icon btn 제거 방법
-      automaticallyImplyLeading: isBool,
-    );
-  }
-
   // note:
   Row _buildRow(BoxConstraints constraints) {
     return Row(
