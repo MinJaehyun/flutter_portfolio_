@@ -9,7 +9,9 @@ import 'package:flutter_portfolio/screen/screen_left_bar/works_list.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class InitPage extends StatefulWidget {
-  const InitPage({Key? key}) : super(key: key);
+  const InitPage({Key? key, required this.changeBrightness, required this.brightness}) : super(key: key);
+  final Function() changeBrightness;
+  final ThemeMode brightness;
 
   @override
   State<InitPage> createState() => _InitPageState();
@@ -55,7 +57,7 @@ class _InitPageState extends State<InitPage> {
               column(constraints, mainPage: 'works', icon: Icon(Icons.build_outlined)),
               // note: contact
               column(constraints, mainPage: 'contact', icon: Icon(Icons.contact_mail_outlined)),
-              // todo: theme
+              // note: theme
               Column(
                 children: [
                   Container(
@@ -66,10 +68,9 @@ class _InitPageState extends State<InitPage> {
                       color: Colors.white12,
                     ),
                     child: IconButton(
-                      // todo: 클릭 시, isMoon = true 를 false 로 변경한다. 아이콘도 변경한다.
-                      onPressed: null,
-                      icon: (constraints.maxWidth > 960) ? Icon(Icons.sunny, color: Colors.white) : Opacity(opacity: 0),
-                      tooltip: 'testing... brightness darkness or light mode',
+                      onPressed: widget.changeBrightness,
+                      icon: constraints.maxWidth > 960 ? Icon(Icons.brightness_4, color: Colors.blueAccent) : Opacity(opacity: 0),
+                      tooltip: 'Dark mode OR Light mode',
                     ),
                   ),
                 ],
@@ -77,7 +78,7 @@ class _InitPageState extends State<InitPage> {
             ],
           ),
         ),
-        // note: 클릭한 대상을 넘겨받고, 이를 변수에 담아 아래 컨테이너에 담고 처리한다
+        // note: 클릭한 대상을 넘겨 받고, 이를 변수에 담아 아래 컨테이너에 담고 처리한다
         // note: if(mainPage == 'about') 이면 about_list.dart 가져오기
         if (mainPage == 'about') AboutMyInfo(),
         if (mainPage == 'resume') ResumePage(),
@@ -93,10 +94,10 @@ class _InitPageState extends State<InitPage> {
       children: [
         IconButton(
           onPressed: () => setState(() => this.mainPage = mainPage),
-          icon: (constraints.maxWidth > 960) ? icon : Opacity(opacity: 0),
+          icon: constraints.maxWidth > 960 ? icon : Opacity(opacity: 0),
         ),
         // note: 1400 이상이면서(&&), 클릭한 대상이면 애니메이션 적용한 text 나타내기
-        if ((constraints.maxWidth > 960) && (this.mainPage == mainPage))
+        if (constraints.maxWidth > 960 && this.mainPage == mainPage)
           AnimatedTextKit(
             animatedTexts: [WavyAnimatedText(mainPage)],
             repeatForever: true,

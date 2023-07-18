@@ -6,8 +6,21 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode brightness = ThemeMode.light;
+
+  void changeBrightness() {
+    setState(() {
+      brightness == ThemeMode.light ? brightness = ThemeMode.dark : brightness = ThemeMode.light;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +39,12 @@ class MyApp extends StatelessWidget {
         colorScheme: darkColorScheme,
         useMaterial3: true,
       ),
-      themeMode: ThemeMode.system,
+      // note: 버튼 클릭 시, ThemeMode.light 또는 ThemeMode.dark 로 바꾼다.
+      themeMode: brightness,
       title: 'Portfolio',
       initialRoute: '/',
       routes: {
-        '/': (context) => InitPage(),
+        '/': (context) => InitPage(changeBrightness: changeBrightness, brightness: brightness),
       },
     );
   }
