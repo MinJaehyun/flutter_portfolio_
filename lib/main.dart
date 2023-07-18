@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         fontFamily: 'Aggro',
         // 변경 전: colorScheme: ColorScheme.fromSeed(seedColor: Colors.black, brightness: Brightness.dark),
-        // note: 변경 후: 색상을 스키마로 설정하여 가져옴. 추 후 내맘대로 스키마를 변경할 수 있다
+        // note: 변경 후: 색상을 스키마로 설정하여 가져옴. 추 후 스키마는 변경하지 않고, primary 같은 속성을 가져와서 특정 부위를 변경할 수 있다
         colorScheme: darkColorScheme,
         useMaterial3: true,
       ),
