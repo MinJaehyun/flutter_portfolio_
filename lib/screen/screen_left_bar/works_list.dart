@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_portfolio/screen/works_about/biba_about.dart';
-import 'package:flutter_portfolio/screen/works_skill/biba_skill.dart';
+import 'package:flutter_portfolio/screen/works_about/chatting_app_about.dart';
+import 'package:flutter_portfolio/screen/works_skill/chatting_app_skill.dart';
 import 'package:flutter_portfolio/screen/works_about/mongodb_about.dart';
 import 'package:flutter_portfolio/screen/works_skill/mongodb_skill.dart';
+import 'package:flutter_portfolio/screen/works_about/vuestagram.dart';
+import 'package:flutter_portfolio/screen/works_skill/vuestagram.dart';
+import 'package:flutter_portfolio/screen/works_about/pinterest.dart';
+import 'package:flutter_portfolio/screen/works_skill/pinterest.dart';
+import 'package:flutter_portfolio/screen/works_about/biba_about.dart';
+import 'package:flutter_portfolio/screen/works_skill/biba_skill.dart';
 
 class WorksList extends StatefulWidget {
   WorksList(this._selectedWork, {Key? key}) : super(key: key);
@@ -14,7 +20,7 @@ class WorksList extends StatefulWidget {
 
 class _WorksListState extends State<WorksList> {
   // note: selectedWork 빈문자로 처리하면 모든 프로젝트 선택하는 화면 나타낼 수 있다
-  String selectedWork = 'mongoDB';
+  String selectedWork = 'chatting app';
 
   @override
   void initState() {
@@ -24,13 +30,19 @@ class _WorksListState extends State<WorksList> {
 
   @override
   Widget build(BuildContext context) {
+    ChattingAppAbout chattingAppAbout = ChattingAppAbout();
+    ChattingAppSkill chattingAppSkill = ChattingAppSkill();
     MongoDBAbout mongoDBAbout = MongoDBAbout();
     MongoDBSkill mongoDBSkill = MongoDBSkill();
+    VuestagramAbout vuestagramAbout = VuestagramAbout();
+    VuestagramSkill vuestagramSkill = VuestagramSkill();
+    PinterestAbout pinterestAbout = PinterestAbout();
+    PinterestSkill pinterestSkill = PinterestSkill();
     BibaAbout bibaAbout = BibaAbout();
     BibaSkill bibaSkill = BibaSkill();
 
     return DefaultTabController(
-      length: 2,
+      length: 5,
       child: Expanded(
         child: Container(
           margin: EdgeInsets.all(12.0),
@@ -42,15 +54,21 @@ class _WorksListState extends State<WorksList> {
                   children: [
                     TabBar(
                       tabs: <Widget>[
-                        Tab(text: 'mongoDB', icon: Icon(Icons.flight)),
-                        Tab(text: 'biba', icon: Icon(Icons.luggage)),
+                        Tab(text: 'chatting app', icon: Icon(Icons.chat_bubble)),
+                        Tab(text: 'mongoDB', icon: Icon(Icons.dataset)),
+                        Tab(text: 'vuestagram', icon: Icon(Icons.person)),
+                        Tab(text: 'pinterest', icon: Icon(Icons.account_box)),
+                        Tab(text: 'biba', icon: Icon(Icons.beach_access_rounded)),
                       ],
                     ),
                     Expanded(
                       child: TabBarView(
                         children: <Widget>[
                           // note: 인자는 함수를 넣겨 줘서, 하위에서 동적 실행하게 한다
+                          NestedTabBar(chattingAppAbout, chattingAppSkill),
                           NestedTabBar(mongoDBAbout, mongoDBSkill),
+                          NestedTabBar(vuestagramAbout, vuestagramSkill),
+                          NestedTabBar(pinterestAbout, pinterestSkill),
                           NestedTabBar(bibaAbout, bibaSkill),
                         ],
                       ),
@@ -82,7 +100,7 @@ class _NestedTabBarState extends State<NestedTabBar> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -100,7 +118,8 @@ class _NestedTabBarState extends State<NestedTabBar> with TickerProviderStateMix
           tabs: [
             Tab(text: 'About'),
             Tab(text: 'Skill'),
-            Tab(text: 'Review'),
+            // todo: 추 후
+            // Tab(text: 'Review'),
           ],
         ),
         Expanded(
@@ -115,7 +134,8 @@ class _NestedTabBarState extends State<NestedTabBar> with TickerProviderStateMix
                 margin: EdgeInsets.all(12),
                 child: Column(children: [Expanded(child: widget.skill)]),
               ),
-              Card(margin: EdgeInsets.all(12), child: Center(child: Text('Test 중 입니다...'))),
+              // todo: 추 후
+              // Card(margin: EdgeInsets.all(12), child: Center(child: Text('Test 중 입니다...'))),
             ],
           ),
         ),

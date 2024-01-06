@@ -5,7 +5,6 @@ import 'package:flutter_portfolio/screen/screen_left_bar/about_my_info.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/contact_page.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/resume_page.dart';
 import 'package:flutter_portfolio/screen/screen_left_bar/works_list.dart';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class InitPage extends StatefulWidget {

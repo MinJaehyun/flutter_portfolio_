@@ -13,7 +13,7 @@ class ContactPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildRow(key: 'Name', value: '민재현'),
-              _buildRow(key: 'Age', value: '만 40'),
+              _buildRow(key: 'Age', value: '만 42'),
               _buildRow(key: 'Phone', value: '010-7339-6954'),
               _buildRow(key: 'Email', value: 'krism2891@gmail.com'),
               _buildRow(key: 'Address', value: '화성시 기안동'),
